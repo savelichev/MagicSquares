@@ -10,7 +10,7 @@ public class MagicSquare4 {
 
 
     private final int SIDE;
-
+    private final int MAGIC_SUM;
 
     private int[][] row;
     private List<Integer> takenElements;
@@ -18,7 +18,7 @@ public class MagicSquare4 {
 
     public MagicSquare4(int side) {
         this.SIDE = side;
-
+        MAGIC_SUM = (side * side * side + side) / 2;
 
 
         row = new int[side][side];
@@ -26,18 +26,11 @@ public class MagicSquare4 {
         takenElements = new ArrayList<>();
     }
 
-    public MagicSquare4(MagicSquare4 magicSquare4) {
-        this.SIDE = magicSquare4.getSIDE();
 
-
-        this.row = Arrays.copyOf(magicSquare4.getRow(), magicSquare4.getRow().length);
-        this.takenElements = new ArrayList<>(magicSquare4.getTakenElements());
-    }
 
     public int getSIDE() {
         return SIDE;
     }
-
 
 
     public int[][] getRow() {
@@ -56,6 +49,9 @@ public class MagicSquare4 {
         this.takenElements = takenElements;
     }
 
+    public int getMAGIC_SUM() {
+        return MAGIC_SUM;
+    }
 
     public void printRow() {
         for (int i = 0; i < SIDE; i++) {
@@ -65,5 +61,50 @@ public class MagicSquare4 {
             System.out.println();
         }
         System.out.println();
+    }
+
+    public int getColumnSum(int y) {
+
+        int columnSum = 0;
+        for (int x = 0; x < SIDE; x++) {
+            columnSum += row[x][y];
+        }
+
+        return columnSum;
+    }
+
+
+    public int getRowSum(int x) {
+        int rowSum = 0;
+        for (int y = 0; y < SIDE; y++) {
+            rowSum += row[x][y];
+        }
+        return rowSum;
+    }
+
+
+    public boolean isMagicDiagonals() {
+
+        int lDiagonal = 0;
+        int rDiagonal = 0;
+
+        for (int i = 0; i < SIDE; i++) {
+            lDiagonal += row[i][i];
+
+        }
+        if (lDiagonal != MAGIC_SUM) {
+            return false;
+        }
+
+        for (int i = 0; i < SIDE; i++) {
+
+            rDiagonal += row[i][(SIDE - 1) - i];
+        }
+
+        if(rDiagonal!=MAGIC_SUM){
+            return false;
+        }
+        return true;
+
     }
 }
