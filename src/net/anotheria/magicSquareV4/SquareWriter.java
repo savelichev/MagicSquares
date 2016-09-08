@@ -8,14 +8,15 @@ import java.io.IOException;
 public class SquareWriter {
 
     private File file = new File("result.txt");
-    private FileWriter fileWriter = new FileWriter(file);
+    private FileWriter fileWriter = new FileWriter(file,false);
+    int counter;
 
     public SquareWriter() throws IOException {
     }
 
-    public void writeResult(MagicSquare4 magicSquare4) throws IOException {
+    public synchronized void writeResult(MagicSquare4 magicSquare4) throws IOException {
 
-
+        System.out.println(++counter);
         for (int i = 0; i < magicSquare4.getSIDE(); i++) {
             for (int j = 0; j < magicSquare4.getSIDE(); j++) {
                 System.out.print(magicSquare4.getRow()[i][j] + " ");

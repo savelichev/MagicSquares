@@ -4,18 +4,41 @@ package net.anotheria.magicSquareV4;
 import java.io.IOException;
 
 public class Main4 {
+
+
     public static void main(String[] args) {
 
-        MagicSolver4 magicSolver4 = null;
+
+//        try {
+//            MagicSolver4 magicSolver4 = new MagicSolver4(5);
+//            magicSolver4.completeRow(0, 0);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+
+        int squareSide = 5;
+        SquareWriter squareWriter = null;
+
+
         try {
-            magicSolver4 = new MagicSolver4(5);
+            squareWriter = new SquareWriter();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (magicSolver4 != null) {
-            magicSolver4.completeRow(0,0);
+
+        for (int i = 1; i < squareSide*squareSide; i+=squareSide) {
+            try {
+                new Thread(new MagicSolver4(squareSide, i, i+squareSide, squareWriter)).start();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+
     }
-
-
 }
+
+
+
+

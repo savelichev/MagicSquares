@@ -17,12 +17,10 @@ public class MagicSquare4 {
 
 
     public MagicSquare4(int side) {
-        this.SIDE = side;
+        SIDE = side;
         MAGIC_SUM = (side * side * side + side) / 2;
 
-
         row = new int[side][side];
-
         takenElements = new ArrayList<>();
     }
 
@@ -69,7 +67,6 @@ public class MagicSquare4 {
         for (int x = 0; x < SIDE; x++) {
             columnSum += row[x][y];
         }
-
         return columnSum;
     }
 
@@ -105,6 +102,5 @@ public class MagicSquare4 {
             return false;
         }
         return true;
-
     }
 }
