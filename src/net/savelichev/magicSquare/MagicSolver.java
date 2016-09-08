@@ -1,4 +1,4 @@
-package net.anotheria.magicSquareV4;
+package net.savelichev.magicSquare;
 
 
 import java.io.IOException;
