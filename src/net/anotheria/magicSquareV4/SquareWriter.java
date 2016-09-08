@@ -9,18 +9,18 @@ public class SquareWriter {
 
     private File file = new File("result.txt");
     private FileWriter fileWriter = new FileWriter(file, false);
-    int counter;
+    private int counter;
 
     public SquareWriter() throws IOException {
     }
 
-    public synchronized void writeResult(MagicSquare4 magicSquare4) throws IOException {
+    public synchronized void writeResult(MagicSquare magicSquare) throws IOException {
 
         System.out.println(++counter);
-        for (int i = 0; i < magicSquare4.getSIDE(); i++) {
-            for (int j = 0; j < magicSquare4.getSIDE(); j++) {
-                System.out.print(magicSquare4.getRow()[i][j] + " ");
-                int c = magicSquare4.getRow()[i][j];
+        for (int i = 0; i < magicSquare.getSIDE(); i++) {
+            for (int j = 0; j < magicSquare.getSIDE(); j++) {
+                System.out.print(magicSquare.getSquare()[i][j] + " ");
+                int c = magicSquare.getSquare()[i][j];
                 fileWriter.append(String.valueOf(c));
                 fileWriter.append(" ");
             }

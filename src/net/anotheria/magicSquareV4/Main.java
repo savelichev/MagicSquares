@@ -3,12 +3,12 @@ package net.anotheria.magicSquareV4;
 
 import java.io.IOException;
 
-public class Main4 {
+public class Main {
 
 
     public static void main(String[] args) {
 
-        int squareSide = 4;
+        int squareSide = 5;
         SquareWriter squareWriter = null;
 
 
@@ -20,7 +20,7 @@ public class Main4 {
 
         for (int i = 1; i < squareSide*squareSide; i+=squareSide) {
             try {
-                new Thread(new MagicSolver4(squareSide, i, i+squareSide, squareWriter)).start();
+                new Thread(new MagicSolver(squareSide, i, i+squareSide, squareWriter)).start();
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -28,7 +28,7 @@ public class Main4 {
         }
 
 //        try {
-//            MagicSolver4 magicSolver4 = new MagicSolver4(5);
+//            MagicSolver magicSolver4 = new MagicSolver(5);
 //            magicSolver4.completeRow(0, 0);
 //        } catch (IOException e) {
 //            e.printStackTrace();
