@@ -8,16 +8,7 @@ public class Main4 {
 
     public static void main(String[] args) {
 
-
-//        try {
-//            MagicSolver4 magicSolver4 = new MagicSolver4(5);
-//            magicSolver4.completeRow(0, 0);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
-
-        int squareSide = 5;
+        int squareSide = 4;
         SquareWriter squareWriter = null;
 
 
@@ -36,6 +27,12 @@ public class Main4 {
             }
         }
 
+//        try {
+//            MagicSolver4 magicSolver4 = new MagicSolver4(5);
+//            magicSolver4.completeRow(0, 0);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 }
 

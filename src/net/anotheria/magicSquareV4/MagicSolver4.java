@@ -37,29 +37,22 @@ public class MagicSolver4 implements Runnable {
             if (magicSquare4.getTakenElements().contains(i)) {
                 continue;
             }
-            magicSquare4.getRow()[row][column] = i;
-            magicSquare4.getTakenElements().add(i);
+            reservePosition(row, column, i);
 
             if (SQUARE_SIDE - column == 2) {
-
-                int lastElement = MAGIC_SUM - magicSquare4.getRowSum(row);
+                int lastElement = MAGIC_SUM - getRowSum(row);
 
                 if (lastElement > 0 && lastElement <= SQUARE_SIDE * SQUARE_SIDE &&
                         !magicSquare4.getTakenElements().contains(lastElement)) {
-
-                    magicSquare4.getRow()[row][column + 1] = lastElement;
-                    magicSquare4.getTakenElements().add(lastElement);
-
+                    reservePosition(row, column + 1, lastElement);
                     completeColumn(row + 1, row);
-
-                    magicSquare4.getRow()[row][column + 1] = 0;
-                    magicSquare4.getTakenElements().remove(magicSquare4.getTakenElements().indexOf(lastElement));
+                    clearPosition(row, column + 1, lastElement);
                 }
             } else if (SQUARE_SIDE - column == 1) {
 
-                if (magicSquare4.getRowSum(row) == MAGIC_SUM) {
+                if (getRowSum(row) == MAGIC_SUM) {
 
-                    if (magicSquare4.isMagicDiagonals()) {
+                    if (isMagicDiagonals()) {
                         try {
                             squareWriter.writeResult(magicSquare4);
                         } catch (IOException e) {
@@ -70,8 +63,7 @@ public class MagicSolver4 implements Runnable {
             } else {
                 completeRow(row, column + 1);
             }
-            magicSquare4.getRow()[row][column] = 0;
-            magicSquare4.getTakenElements().remove(magicSquare4.getTakenElements().indexOf(i));
+            clearPosition(row, column, i);
         }
     }
 
@@ -81,43 +73,85 @@ public class MagicSolver4 implements Runnable {
             if (magicSquare4.getTakenElements().contains(i)) {
                 continue;
             }
-
-            magicSquare4.getRow()[row][column] = i;
-            magicSquare4.getTakenElements().add(i);
+            reservePosition(row, column, i);
 
             if (SQUARE_SIDE - row == 2) {
-
-                int lastElement = MAGIC_SUM - magicSquare4.getColumnSum(column);
+                int lastElement = MAGIC_SUM - getColumnSum(column);
 
                 if (lastElement > 0 && lastElement <= SQUARE_SIDE * SQUARE_SIDE &&
                         !magicSquare4.getTakenElements().contains(lastElement)) {
-
-                    magicSquare4.getRow()[row + 1][column] = lastElement;
-                    magicSquare4.getTakenElements().add(lastElement);
-
+                    reservePosition(row + 1, column, lastElement);
                     completeRow(column + 1, column + 1);
-
-                    magicSquare4.getRow()[row + 1][column] = 0;
-                    magicSquare4.getTakenElements().remove(magicSquare4.getTakenElements().indexOf(lastElement));
+                    clearPosition(row + 1, column, lastElement);
                 }
             } else if (SQUARE_SIDE - row == 1) {
 
-                if (magicSquare4.getColumnSum(column) == MAGIC_SUM) {
+                if (getColumnSum(column) == MAGIC_SUM) {
                     completeRow(column + 1, column + 1);
                 }
             } else {
                 completeColumn(row + 1, column);
             }
-            magicSquare4.getRow()[row][column] = 0;
-            magicSquare4.getTakenElements().remove(magicSquare4.getTakenElements().indexOf(i));
+            clearPosition(row, column, i);
         }
     }
+
+    private void reservePosition(int row, int column, int value) {
+        magicSquare4.getRow()[row][column] = value;
+        magicSquare4.getTakenElements().add(value);
+    }
+
+    private void clearPosition(int row, int column, int value) {
+        magicSquare4.getRow()[row][column] = 0;
+        magicSquare4.getTakenElements().remove(magicSquare4.getTakenElements().indexOf(value));
+    }
+
+    public boolean isMagicDiagonals() {
+
+        int lDiagonal = 0;
+        int rDiagonal = 0;
+
+        for (int i = 0; i < SQUARE_SIDE; i++) {
+            lDiagonal += magicSquare4.getRow()[i][i];
+
+        }
+        if (lDiagonal != MAGIC_SUM) {
+            return false;
+        }
+
+        for (int i = 0; i < SQUARE_SIDE; i++) {
+
+            rDiagonal += magicSquare4.getRow()[i][(SQUARE_SIDE - 1) - i];
+        }
+
+        if (rDiagonal != MAGIC_SUM) {
+            return false;
+        }
+        return true;
+    }
+
+    public int getRowSum(int x) {
+        int rowSum = 0;
+        for (int y = 0; y < SQUARE_SIDE; y++) {
+            rowSum += magicSquare4.getRow()[x][y];
+        }
+        return rowSum;
+    }
+
+    public int getColumnSum(int y) {
+
+        int columnSum = 0;
+        for (int x = 0; x < SQUARE_SIDE; x++) {
+            columnSum += magicSquare4.getRow()[x][y];
+        }
+        return columnSum;
+    }
+
 
     @Override
     public void run() {
 
         for (int i = fromElement; i < toElement; i++) {
-
             magicSquare4.getRow()[0][0] = i;
             magicSquare4.getTakenElements().add(i);
 

@@ -8,7 +8,7 @@ import java.io.IOException;
 public class SquareWriter {
 
     private File file = new File("result.txt");
-    private FileWriter fileWriter = new FileWriter(file,false);
+    private FileWriter fileWriter = new FileWriter(file, false);
     int counter;
 
     public SquareWriter() throws IOException {
