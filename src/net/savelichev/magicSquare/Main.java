@@ -26,13 +26,6 @@ public class Main {
                 e.printStackTrace();
             }
         }
-
-//        try {
-//            MagicSolver magicSolver4 = new MagicSolver(5);
-//            magicSolver4.completeRow(0, 0);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
     }
 }
 

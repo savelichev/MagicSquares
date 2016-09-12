@@ -3,8 +3,10 @@ package net.savelichev.magicSquare;
 
 import java.io.IOException;
 
+/**
+ * Solve all possible magic squares
+ */
 public class MagicSolver implements Runnable {
-
 
     private final int SQUARE_SIDE;
     private final int MAGIC_SUM;
@@ -13,7 +15,6 @@ public class MagicSolver implements Runnable {
 
     private MagicSquare magicSquare;
     private SquareWriter squareWriter = new SquareWriter();
-
 
     /**
      * Constructor for one thread realization
@@ -45,15 +46,13 @@ public class MagicSolver implements Runnable {
         this.squareWriter = squareWriter;
     }
 
-
     /**
      * Fills row using recursion.
-     * When it's  the penultimate index of the row, try's to fill last element in row
-     * as a difference of MAGIC_SUM and row sum. If calculated last element not
-     * valid fo this row, it go for one step back.
-     * When all elements in row are filled, invokes method for filling column.
-     * When it's the last column, it means that square is completed, then checks is
-     * the square magic. If is, then send result to the SquareWriter, if not, go step back.
+     * When it's  the penultimate index of the row, try's to fill last element in row as a difference of
+     * MAGIC_SUM and row sum. If calculated last element not valid fo this row, it go for one step back.
+     * When all elements in row are filled, invokes method for filling column. When it's the last column,
+     * it means that square is completed, then checks is the square magic. If is, then send result to the
+     * SquareWriter, if not, go step back.
      *
      * @param row    index of the row
      * @param column index of the column
@@ -82,7 +81,8 @@ public class MagicSolver implements Runnable {
 
                     if (isMagicDiagonals()) {
                         try {
-                            squareWriter.writeResult(magicSquare);
+                            squareWriter.writeToFile(magicSquare);
+                            squareWriter.writeToConsole(magicSquare);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -95,16 +95,9 @@ public class MagicSolver implements Runnable {
         }
     }
 
-    /**
-     * Fills column using recursion.
-     * When it's  the penultimate index of the row, try's to fill last element in row
-     * as a difference of MAGIC_SUM and row sum. If calculated last element not
-     * valid fo this row, it go for one step back.
-     * When all elements in the column are filled, invokes method for filling row.
-     *
-     * @param row    index of the row
-     * @param column index of the column
-     */
+    //Fills column using recursion. When it's  the penultimate index of the row, try's to fill last element
+    //in row as a difference of MAGIC_SUM and row sum. If calculated last element not valid fo this row, it
+    //go for one step back. When all elements in the column are filled, invokes method for filling row.
     private void completeColumn(int row, int column) {
 
         for (int i = 1; i <= SQUARE_SIDE * SQUARE_SIDE; i++) {
@@ -134,40 +127,20 @@ public class MagicSolver implements Runnable {
         }
     }
 
-
-    /**
-     * Reserving position in square with relevant coordinates.
-     * Also adds current value into used elements list.
-     *
-     * @param row    index of the row
-     * @param column index of the column
-     * @param value  value for reserving
-     */
+    //Reserving position in square with relevant coordinates. Also adds current value into used elements list.
     private void reservePosition(int row, int column, int value) {
         magicSquare.getSquare()[row][column] = value;
         magicSquare.getUsedElements().add(value);
     }
 
-    /**
-     * Clearing position in square with relevant coordinates.
-     * Also removes current value from used elements list
-     *
-     * @param row    index of the row
-     * @param column index of the column
-     * @param value  value for reserving
-     */
+    //Clearing position in square with relevant coordinates. Also removes current value from used elements list.
     private void clearPosition(int row, int column, int value) {
         magicSquare.getSquare()[row][column] = 0;
         magicSquare.getUsedElements().remove(magicSquare.getUsedElements().indexOf(value));
     }
 
-
-    /**
-     * Checking diagonals for MAGIC_SUM equals
-     *
-     * @return true if equals, false if not
-     */
-    public boolean isMagicDiagonals() {
+    //Checking diagonals for MAGIC_SUM equals.
+    private boolean isMagicDiagonals() {
 
         int lDiagonal = 0;
         int rDiagonal = 0;
@@ -191,13 +164,8 @@ public class MagicSolver implements Runnable {
         return true;
     }
 
-    /**
-     * Calculate sum of the row
-     *
-     * @param x row index
-     * @return sum of all elements in row
-     */
-    public int getRowSum(int x) {
+    //Calculate sum of the row.
+    private int getRowSum(int x) {
         int rowSum = 0;
         for (int y = 0; y < SQUARE_SIDE; y++) {
             rowSum += magicSquare.getSquare()[x][y];
@@ -205,13 +173,8 @@ public class MagicSolver implements Runnable {
         return rowSum;
     }
 
-    /**
-     * Calculate sum of the column
-     *
-     * @param y column index
-     * @return sum of all elements in column
-     */
-    public int getColumnSum(int y) {
+    //Calculate sum of the column.
+    private int getColumnSum(int y) {
 
         int columnSum = 0;
         for (int x = 0; x < SQUARE_SIDE; x++) {
@@ -219,7 +182,6 @@ public class MagicSolver implements Runnable {
         }
         return columnSum;
     }
-
 
     @Override
     public void run() {

@@ -4,16 +4,24 @@ package net.savelichev.magicSquare;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings("Duplicates")
+/**
+ * Magic square entity.
+ */
 public class MagicSquare {
 
-    /*Square side size*/
+    /**
+     * Square side size
+     */
     private int SIDE;
 
-    /*Square elements*/
+    /**
+     * Square elements
+     */
     private int[][] square;
 
-    /*Used elements in the square*/
+    /**
+     * Used elements in the square
+     */
     private List<Integer> usedElements;
 
 
