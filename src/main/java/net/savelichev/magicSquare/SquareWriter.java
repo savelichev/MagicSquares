@@ -1,9 +1,14 @@
 package net.savelichev.magicSquare;
 
 
+import net.savelichev.magicSquare.hibernate.HibernateSessionFactory;
+import net.savelichev.magicSquare.hibernate.MagicEntity;
+import org.hibernate.Session;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * Writes square into file or console.
@@ -30,7 +35,7 @@ public class SquareWriter {
      * @param magicSquare target to write.
      * @throws IOException
      */
-    public synchronized void writeToFile(MagicSquare magicSquare) throws IOException {
+    public void writeToFile(MagicSquare magicSquare) throws IOException {
 
 
         for (int i = 0; i < magicSquare.getSIDE(); i++) {
@@ -49,10 +54,9 @@ public class SquareWriter {
     /**
      * Write square into console.
      *
-     * @param magicSquare
      * @throws IOException
      */
-    public synchronized void writeToConsole(MagicSquare magicSquare) throws IOException {
+    public void writeToConsole(MagicSquare magicSquare) throws IOException {
 
         for (int i = 0; i < magicSquare.getSIDE(); i++) {
             for (int j = 0; j < magicSquare.getSIDE(); j++) {
@@ -62,6 +66,33 @@ public class SquareWriter {
             System.out.println();
         }
         System.out.println();
+    }
+
+    /**
+     * Write square into database using Hibernate.
+     *
+     * @param magicSquare target to write.
+     */
+    public void writeToDatabase(MagicSquare magicSquare) {
+
+
+        Session session = HibernateSessionFactory.getSession();
+
+        session.beginTransaction();
+
+        MagicEntity magicSquareEntity = new MagicEntity();
+
+        StringBuilder result = new StringBuilder();
+        for (int[] row : magicSquare.getSquare()) {
+            result.append(Arrays.toString(row));
+        }
+
+        magicSquareEntity.setResult(result.toString());
+
+        session.save(magicSquareEntity);
+        session.getTransaction().commit();
+
+        session.close();
     }
 
 }

@@ -83,6 +83,7 @@ public class MagicSolver implements Runnable {
                         try {
                             squareWriter.writeToFile(magicSquare);
                             squareWriter.writeToConsole(magicSquare);
+                            squareWriter.writeToDatabase(magicSquare);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
